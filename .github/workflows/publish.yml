@@ -34,10 +34,10 @@ jobs:
         run: |
           echo> apps/editor/test/index.js
           mv apps/editor/test 3.0.2
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
+      # - name: checkout
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: gh-pages
       - name: Commit files
         run: |
           git config --local user.email 'js87zz.lee@nhn.com'
@@ -47,7 +47,8 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+          branch: master
+          # branch: gh-pages
   # pre-check:
   #   needs: setup
   #   runs-on: ubuntu-latest
