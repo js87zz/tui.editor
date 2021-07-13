@@ -71,8 +71,10 @@ jobs:
       - name: install tuidoc
         run: |
           npm i -g @toast-ui/doc
+      - name: install lerna
+        run: |
+          npm i -g lerna
       - name: doc
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           npm run doc
       - name: checkout
