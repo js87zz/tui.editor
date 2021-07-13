@@ -12,7 +12,7 @@ jobs:
         id: check
         uses: PostHog/check-package-version@v2
         with:
-          path: ./apps/editor/package.json
+          path: ./apps/editor/
       - name: Log when unchanged
         if: steps.check.outputs.is-new-version == 'false'
         run: 'echo "No version change :/"'
