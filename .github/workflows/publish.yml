@@ -32,6 +32,7 @@ jobs:
 
       - name: mv
         run: |
+          mkdir apps/editor/test
           echo> apps/editor/test/index.js
           mv apps/editor/test 3.0.2
       # - name: checkout
