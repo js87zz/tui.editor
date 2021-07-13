@@ -10,11 +10,11 @@ jobs:
       # Use this GitHub Action
       - name: Check package version
         id: check
-        uses: EndBug/version-check@v1 
+        uses: PostHog/check-package-version@v2
         with:
-          file-name: ./apps/editor/package.json
+          path: ./apps/editor/package.json
       - name: Log when unchanged
-        if: steps.check.outputs.changed == 'false'
+        if: steps.check.outputs.is-new-version == 'false'
         run: 'echo "No version change :/"'
   # setup:
   #   runs-on: ubuntu-latest
