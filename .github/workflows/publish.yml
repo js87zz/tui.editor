@@ -1,57 +1,65 @@
 name: Editor Publish
 on: [workflow_dispatch]
 jobs:
-  setup:
+  checkVersion:
+    name: Check package version
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Use Node.js 15.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '15.x'
-      # - name: install
-      #   run: |
-      #     npm i -g @toast-ui/doc
-      #     npm i -g lerna
-      #     npm ci
-      # - name: build
-      #   run: |
-      #     npm run build toastmark
-      #     npm run build editor
-      # - name: Use Node.js 10.x
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '10.x'
-      # - name: doc
-      #   run: |
-      #     npm run doc
+      - uses: actions/checkout@v2
 
-          # mv apps/editor/3.0.2 3.0.2
-          # mv -i apps/editor/_latest latest
+      # Use this GitHub Action
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          PACKAGE_DIR: apps/editor/
+          COMMIT_DISABLED: 1
+  # setup:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js 15.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '15.x'
+  #     - name: install
+  #       run: |
+  #         npm i -g @toast-ui/doc
+  #         npm i -g lerna
+  #         npm ci
+  #     - name: build
+  #       run: |
+  #         npm run build toastmark
+  #         npm run build editor
+  #     - name: Use Node.js 10.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '10.x'
+  #     - name: doc
+  #       run: |
+  #         npm run doc
+  #         mv apps/editor/3.0.2 3.0.2
+  #         mv -i apps/editor/_latest latest
+  #         git stash --include-untracked
+  #     - name: checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         ref: gh-pages
+  #     - name: Commit files
+  #       run: |
+  #         git config --local user.email 'js87zz.lee@nhn.com'
+  #         git config --local user.name 'js87zz'
+  #         git stash pop
+  #         git add .
+  #         git commit -m 'test'
+  #     - name: Push changes
+  #       uses: ad-m/github-push-action@master
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         branch: gh-pages
 
-      - name: mv
-        run: |
-          mkdir apps/editor/test
-          echo> apps/editor/test/index.js
-          mv apps/editor/test 3.0.2
-          git stash --include-untracked
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-      - name: Commit files
-        run: |
-          git config --local user.email 'js87zz.lee@nhn.com'
-          git config --local user.name 'js87zz'
-          git stash pop
-          git add .
-          git commit -m 'test'
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+
+
   # pre-check:
   #   needs: setup
   #   runs-on: ubuntu-latest
