@@ -9,10 +9,12 @@ jobs:
 
       # Use this GitHub Action
       - name: Check package version
-        uses: technote-space/package-version-check-action@v1
+        uses: EndBug/version-check@v1 
         with:
-          PACKAGE_DIR: apps/editor/
-          COMMIT_DISABLED: 1
+          file-name: ./apps/editor/package.json
+      - name: Log when unchanged
+        if: steps.check.outputs.changed == 'false'
+        run: 'echo "No version change :/"'
   # setup:
   #   runs-on: ubuntu-latest
   #   steps:
