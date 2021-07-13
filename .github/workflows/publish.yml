@@ -19,16 +19,43 @@ jobs:
       - name: build editor
         run: |
           npm run build editor
-  pre-check:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: eslint
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: install tuidoc
         run: |
-          npm run lint:all
-      - name: check types
+          npm i -g @toast-ui/doc
+      - name: install lerna
         run: |
-          npm run test:types:all 
+          npm i -g lerna
+      - name: doc
+        run: |
+          npm run doc
+      - name: checkout
+        run: |
+          git checkout gh-pages
+      - name: mv
+        run: |
+          mv apps/editor/_latest 3.0.2
+      - name: mv2
+        run: |
+          mv -i apps/editor/_latest latest
+      - name: push-origin
+        run: |
+          git add .
+          git commit -m "test"
+          git push origin gh-pages
+  # pre-check:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: eslint
+  #       run: |
+  #         npm run lint:all
+  #     - name: check types
+  #       run: |
+  #         npm run test:types:all 
   # test:
   #   needs: setup
   #   runs-on: ubuntu-latest
