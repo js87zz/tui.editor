@@ -13,52 +13,64 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
-      - name: npm install
+      - name: npm ci
         run: |
-          npm install
+          npm ci
       - name: build toastmark
         run: |
           npm run build toastmark
       - name: build editor
         run: |
           npm run build editor
-  pre-check:
-    needs: setup
+  # pre-check:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: eslint
+  #       run: |
+  #         npm run lint:all
+  #     - name: check types
+  #       run: |
+  #         npm run test:types:all 
+  # test:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: toastmark unit, integration test
+  #       run: |
+  #         npm run test:ci toastmark
+  #     - name: editor unit, integration test
+  #       run: |
+  #         npm run test:ci editor
+  # plugin-test:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: chart plugin unit, integration test
+  #       run: |
+  #         npm run test:ci chart
+  #     - name: color syntax plugin unit, integration test
+  #       run: |
+  #         npm run test:ci color
+  #     - name: code syntax highlighting plugin unit, integration test
+  #       run: |
+  #         npm run test:ci code
+  #     - name: table merged cell plugin unit, integration test
+  #       run: |
+  #         npm run test:ci table
+  #     - name: uml plugin unit, integration test
+  #       run: |
+  #         npm run test:ci uml
+  doc:
     runs-on: ubuntu-latest
     steps:
-      - name: eslint
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: install tuidoc
         run: |
-          npm run lint:all
-      - name: check types
+          npm i -g @toast-ui/doc
+      - name: doc
         run: |
-          npm run test:types:all 
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: toastmark unit, integration test
-        run: |
-          npm run test:ci toastmark
-      - name: editor unit, integration test
-        run: |
-          npm run test:ci editor
-  plugin-test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: chart plugin unit, integration test
-        run: |
-          npm run test:ci chart
-      - name: color syntax plugin unit, integration test
-        run: |
-          npm run test:ci color
-      - name: code syntax highlighting plugin unit, integration test
-        run: |
-          npm run test:ci code
-      - name: table merged cell plugin unit, integration test
-        run: |
-          npm run test:ci table
-      - name: uml plugin unit, integration test
-        run: |
-          npm run test:ci uml
-      
+          npm run doc
