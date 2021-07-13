@@ -9,6 +9,7 @@ jobs:
 
       # Use this GitHub Action
       - name: Check package version
+        id: check
         uses: EndBug/version-check@v1 
         with:
           file-name: ./apps/editor/package.json
