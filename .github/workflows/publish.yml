@@ -49,7 +49,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+          branch: master
   # pre-check:
   #   needs: setup
   #   runs-on: ubuntu-latest
