@@ -19,6 +19,7 @@ jobs:
       - name: Cancel
         uses: andymckay/cancel-action@0.2
   setup:
+    needs: [checkVersion]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
@@ -27,6 +28,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
+      - name: Log
+        run: 'echo "do it?"'
   #     - name: install
   #       run: |
   #         npm i -g @toast-ui/doc
