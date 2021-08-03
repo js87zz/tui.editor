@@ -114,10 +114,6 @@ jobs:
         uses: PostHog/check-package-version@v2
         with:
           path: ./apps/editor/
-      - name: Use Node.js 15.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '15.x'
       - name: Install
         run: |
           npm i -g @toast-ui/doc lerna
