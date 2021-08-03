@@ -13,11 +13,9 @@ jobs:
         uses: PostHog/check-package-version@v2
         with:
           path: ./apps/editor/
-      - name: Log when unchanged
-        if: steps.check.outputs.is-new-version == 'false'
-        run: 'echo "No version change :/"'
-      - name: Cancel
+      - name: Cancel when unchanged
         uses: andymckay/cancel-action@0.2
+        if: steps.check.outputs.is-new-version == 'false'
   setup:
     needs: [checkVersion]
     runs-on: ubuntu-latest
