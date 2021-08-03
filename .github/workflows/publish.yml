@@ -132,13 +132,14 @@ jobs:
         run: |
           npm run build toastmark
           npm run build editor
-      - name: doc
+      - name: Run doc
         run: |
           npm run doc
-          mv apps/editor/${{ steps.check.outputs.committed-version }} ${{ steps.check.outputs.committed-version }}
+          mv apps/editor/_${{ steps.check.outputs.committed-version }} ${{ steps.check.outputs.committed-version }}
           mv apps/editor/_latest latest
+          rm -rf apps/editor/tmpdoc
           git stash --include-untracked
-      - name: checkout
+      - name: Checkout gh-pages
         uses: actions/checkout@v2
         with:
           ref: gh-pages
