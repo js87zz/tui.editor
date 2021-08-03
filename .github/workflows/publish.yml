@@ -138,6 +138,7 @@ jobs:
           mv apps/editor/_${{ steps.check.outputs.committed-version }} ${{ steps.check.outputs.committed-version }}
           mv apps/editor/_latest latest
           rm -rf apps/editor/tmpdoc
+          git checkout -- apps/editor/types/index.d.ts
           git stash --include-untracked
       - name: Checkout gh-pages
         uses: actions/checkout@v2
