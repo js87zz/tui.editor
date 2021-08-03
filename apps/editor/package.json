@@ -1,6 +1,6 @@
 {
-  "name": "tui-test-bar",
-  "version": "1.0.5",
+  "name": "@toast-ui/editor",
+  "version": "3.0.2-alpha.0",
   "description": "GFM  Markdown Wysiwyg Editor - Productive and Extensible",
   "keywords": [
     "nhn",
