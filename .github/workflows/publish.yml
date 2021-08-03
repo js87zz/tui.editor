@@ -120,7 +120,7 @@ jobs:
           node-version: '15.x'
       - name: Install
         run: |
-          npm i -g @toast-ui/doc lerna
+          npm i -g @toast-ui/doc
           npm ci
       - name: Build
         run: |
