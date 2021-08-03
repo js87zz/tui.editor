@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Use this GitHub Action
       - name: Check package version
         id: check
         uses: PostHog/check-package-version@v2
@@ -15,18 +14,18 @@ jobs:
       - name: Cancel when unchanged
         uses: andymckay/cancel-action@0.2
         if: steps.check.outputs.is-new-version == 'false'
-  setup:
-    needs: [checkVersion]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Use Node.js 15.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '15.x'
-      - name: Log
-        run: 'echo "do it?"'
+  # setup:
+  #   needs: [checkVersion]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v2
+  #     - name: Use Node.js 15.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '15.x'
+  #     - name: Log
+  #       run: 'echo "do it?"'
   #     - name: install
   #       run: |
   #         npm i -g @toast-ui/doc
@@ -104,38 +103,54 @@ jobs:
   #     - name: uml plugin unit, integration test
   #       run: |
   #         npm run test:ci uml
-  # doc:
-  #   runs-on: ubuntu-latest
-  #   needs: setup
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v2
-  #     - name: Use Node.js 10.x
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '10.x'
-  #     - name: install tuidoc
-  #       run: |
-  #         npm i -g @toast-ui/doc
-  #     - name: install lerna
-  #       run: |
-  #         npm i -g lerna
-  #     - name: doc
-  #       run: |
-  #         npm run doc
-  #     - name: checkout
-  #       run: |
-  #         git checkout gh-pages
-  #     - name: mv
-  #       run: |
-  #         mv apps/editor/_latest 3.0.2
-  #     - name: mv2
-  #       run: |
-  #         mv -i apps/editor/_latest latest
-  #     - name: push-origin
-  #       run: |
-  #         git add .
-  #         git commit -m "test"
-  #         git push origin gh-pages
+  
+  doc:
+    runs-on: ubuntu-latest
+    needs: [checkVersion]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check the package version
+        id: check
+        uses: PostHog/check-package-version@v2
+        with:
+          path: ./apps/editor/
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.x'
+      - name: Install
+        run: |
+          npm i -g @toast-ui/doc lerna
+          npm ci
+      - name: Build
+        run: |
+          npm run build toastmark
+          npm run build editor
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: doc
+        run: |
+          npm run doc
+          mv apps/editor/${{ steps.check.outputs.committed-version }} ${{ steps.check.outputs.committed-version }}
+          mv apps/editor/_latest latest
+          git stash --include-untracked
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: Commit files
+        run: |
+          git config --local user.email 'js87zz.lee@nhn.com'
+          git config --local user.name 'js87zz'
+          git stash pop
+          git add .
+          git commit -m '${{ steps.check.outputs.committed-version }}'
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
 
           
