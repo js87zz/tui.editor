@@ -33,7 +33,7 @@ jobs:
             npm run lint:all
         - name: Check types
           run: |
-          npm run test:types:all
+            npm run test:types:all
 
     test:
       needs: [checkVersion]
