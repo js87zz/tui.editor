@@ -147,7 +147,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    needs: [pre-check, test, plugin-test]
+    # needs: [pre-check, test, plugin-test]
     steps:
       - uses: actions/checkout@v2
       - name: Check the package version
