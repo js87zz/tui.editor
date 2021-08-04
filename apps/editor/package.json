@@ -1,5 +1,5 @@
 {
-  "name": "@toast-ui/editor",
+  "name": "tui-test-bar",
   "version": "3.0.2-alpha.0",
   "description": "GFM  Markdown Wysiwyg Editor - Productive and Extensible",
   "keywords": [
@@ -13,32 +13,7 @@
     "preview",
     "gfm"
   ],
-  "main": "dist/toastui-editor.js",
-  "module": "dist/esm/",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/toastui-editor.js"
-    },
-    "./viewer": {
-      "import": "./dist/esm/indexViewer.js",
-      "require": "./dist/toastui-editor-viewer.js"
-    },
-    "./dist/toastui-editor-viewer": "./dist/toastui-editor-viewer.js",
-    "./dist/toastui-editor.css": "./dist/toastui-editor.css",
-    "./dist/toastui-editor-viewer.css": "./dist/toastui-editor-viewer.css",
-    "./dist/theme/toastui-editor-dark.css": "./dist/theme/toastui-editor-dark.css",
-    "./toastui-editor.css": "./dist/toastui-editor.css",
-    "./toastui-editor-viewer.css": "./dist/toastui-editor-viewer.css",
-    "./toastui-editor-dark.css": "./dist/theme/toastui-editor-dark.css"
-  },
-  "types": "types/index.d.ts",
   "files": [
-    "dist/*.js",
-    "dist/*.css",
-    "dist/theme",
-    "dist/esm",
-    "dist/i18n",
     "types"
   ],
   "author": "NHN FE Development Lab <dl_javascript@nhn.com>",

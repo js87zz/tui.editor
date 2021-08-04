@@ -145,50 +145,21 @@ jobs:
   #         github_token: ${{ secrets.GITHUB_TOKEN }}
   #         branch: gh-pages
 
-  # publish:
-  #   runs-on: ubuntu-latest
-  #   needs: [pre-check, test, plugin-test]
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Check the package version
-  #       id: check
-  #       uses: PostHog/check-package-version@v2
-  #       with:
-  #         path: ./apps/editor/
-  #     - name: Use Node.js 15.x
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '15.x'
-  #         registry-url: https://registry.npmjs.org/
-  #     - name: Install
-  #       run: |
-  #         npm ci
-  #     - name: Build
-  #       run: |
-  #         npm run build toastmark
-  #         npm run build editor
-  #         npm run build react
-  #         npm run build vue
-  #     - name: Create Tag
-  #       run: |
-  #         git config --local user.email 'js87zz.lee@nhn.com'
-  #         git config --local user.name 'js87zz'
-  #         git tag v${{ steps.check.outputs.committed-version }}
-  #     - name: Push Tag
-  #       run: |
-  #         git push origin v${{ steps.check.outputs.committed-version }}
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-cdn:
+  publish:
     runs-on: ubuntu-latest
-    # needs: [pre-check, test, plugin-test]
+    needs: [pre-check, test, plugin-test]
     steps:
       - uses: actions/checkout@v2
+      - name: Check the package version
+        id: check
+        uses: PostHog/check-package-version@v2
+        with:
+          path: ./apps/editor/
       - name: Use Node.js 15.x
         uses: actions/setup-node@v1
         with:
           node-version: '15.x'
+          registry-url: https://registry.npmjs.org/
       - name: Install
         run: |
           npm ci
@@ -196,21 +167,24 @@ jobs:
         run: |
           npm run build toastmark
           npm run build editor
-      - name: Publish CDN
+          npm run build react
+          npm run build vue
+      - name: Create Tag
         run: |
-          npm run publish:cdn
+          git config --local user.email 'js87zz.lee@nhn.com'
+          git config --local user.name 'js87zz'
+          git tag v${{ steps.check.outputs.committed-version }}
+      - name: Push Tag
+        run: |
+          git push origin v${{ steps.check.outputs.committed-version }}
         env:
-          TOAST_CLOUD_TENENTID: ${{ secrets.TOAST_CLOUD_TENENTID }}
-          TOAST_CLOUD_STORAGEID: ${{ secrets.TOAST_CLOUD_STORAGEID }}
-          TOAST_CLOUD_USERNAME: ${{ secrets.TOAST_CLOUD_USERNAME }}
-          TOAST_CLOUD_PASSWORD: ${{ secrets.TOAST_CLOUD_PASSWORD }}
-
-      # - name: Npm Publish(editor)
-      #   working-directory: ./apps/editor
-      #   run: |
-      #     npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Npm Publish(editor)
+        working-directory: ./apps/editor
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
       # - name: Npm Publish(react)
       #   working-directory: ./apps/react-editor
       #   run: |
@@ -224,4 +198,28 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
+  # publish-cdn:
+  #   runs-on: ubuntu-latest
+  #   # needs: [pre-check, test, plugin-test]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Use Node.js 15.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '15.x'
+  #     - name: Install
+  #       run: |
+  #         npm ci
+  #     - name: Build
+  #       run: |
+  #         npm run build toastmark
+  #         npm run build editor
+  #     - name: Publish CDN
+  #       run: |
+  #         npm run publish:cdn
+  #       env:
+  #         TOAST_CLOUD_TENENTID: ${{ secrets.TOAST_CLOUD_TENENTID }}
+  #         TOAST_CLOUD_STORAGEID: ${{ secrets.TOAST_CLOUD_STORAGEID }}
+  #         TOAST_CLOUD_USERNAME: ${{ secrets.TOAST_CLOUD_USERNAME }}
+  #         TOAST_CLOUD_PASSWORD: ${{ secrets.TOAST_CLOUD_PASSWORD }}
           
