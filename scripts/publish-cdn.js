@@ -12,10 +12,6 @@ const tenantId = process.env.TOAST_CLOUD_TENENTID;
 const storageId = process.env.TOAST_CLOUD_STORAGEID;
 const username = process.env.TOAST_CLOUD_USERNAME;
 const password = process.env.TOAST_CLOUD_PASSWORD;
-// const tenantId = 'e18353c4ea5746c097143946d0644e61';
-// const storageId = 'AUTH_e18353c4ea5746c097143946d0644e61';
-// const username = 'js87zz.lee@nhn.com';
-// const password = 'skfdkfk87!';
 
 async function getTOASTCloudContainer(token) {
   const response = await fetch(`${STORAGE_API_URL}/${storageId}`, {
@@ -81,8 +77,7 @@ async function publish() {
   const container = await getTOASTCloudContainer(token);
   const cdnPath = `${storageId}/${container}`;
 
-  // [pkg.version, 'latest2'].forEach((dir) => {
-  [pkg.version].forEach((dir) => {
+  [pkg.version, 'latest'].forEach((dir) => {
     publishToCdn(token, LOCAL_DIST_PATH, `${cdnPath}/${dir}`);
   });
 }
