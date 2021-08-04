@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires, no-process-env */
 const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
@@ -8,7 +8,10 @@ const LOCAL_DIST_PATH = path.join(__dirname, '../apps/editor/dist/cdn');
 const STORAGE_API_URL = 'https://api-storage.cloud.toast.com/v1';
 const IDENTITY_API_URL = 'https://api-identity.infrastructure.cloud.toast.com/v2.0';
 
-const [tenantId, storageId, username, password] = process.argv.slice(2);
+const tenantId = process.env.TOAST_CLOUD_TENENTID;
+const storageId = process.env.TOAST_CLOUD_STORAGEID;
+const username = process.env.TOAST_CLOUD_USERNAME;
+const password = process.env.TOAST_CLOUD_PASSWORD;
 // const tenantId = 'e18353c4ea5746c097143946d0644e61';
 // const storageId = 'AUTH_e18353c4ea5746c097143946d0644e61';
 // const username = 'js87zz.lee@nhn.com';
