@@ -107,7 +107,7 @@ jobs:
           node-version: '15.x'
       - name: Install
         run: |
-          npm ci
+          npm install
       - name: Use Node.js 10.22.1
         uses: actions/setup-node@v1
         with:
